@@ -19,6 +19,7 @@ You can find the source code for Jekyll at GitHub:
 
 Mình là Hoàng, sinh viên của ĐHBKHN. Blog này được viết ra nhằm mục đích chia sẻ kiến thức, kinh nghiệm, ghi lại hành trình tu luyện của bản thân mình trong lĩnh vực Web Security và những vấn đề liên quan. Nếu mọi người có bất kì câu hỏi, ý tưởng hay góp ý gì về blog của mình, bạn có thể liên hệ mình bằng những kênh thông tin dưới đây.
 
-- [Email][nxhoang99@gmail.com]
+- Email: nxhoang99@gmail.com
+- [Twitter](https://twitter.com/hoangnx99)
 - [Facebook](https://www.facebook.com/hoang.h.hong.965/)
 - [Github](https://github.com/nxhoanghust)
