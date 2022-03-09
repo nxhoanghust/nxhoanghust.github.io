@@ -85,7 +85,7 @@ Content-Length: 334
 After adding a route, all the new route need a subsequent request to make the application recognize.
 
 ```
-GET /actuator/gateway/routes HTTP/1.1
+GET /actuator/gateway/refresh HTTP/1.1
 Host: 192.168.137.120:9000
 Connection: close
 
