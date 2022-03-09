@@ -10,11 +10,11 @@ categories: jekyll update
 </i>
 
 <b>Note: </b>
-<i>Update in 01/03/2021: 
-- 16/01/2021: We reported to VMware and being assigned for triage after that. 
-- 16/02/2021: Ask for any update and get my first 0day <b>DUPLICATE</b>
+<i>Update in 01/03/2022: 
+- 16/01/2022: We reported to VMware and being assigned for triage after that. 
+- 16/02/2022: Ask for any update and get my first 0day <b>DUPLICATE</b>
 ![](/assets/spring-gateway/duplicate.png)
-- 01/03/2021: VMware release new version, duplicated guy also release the new blog about this.
+- 01/03/2022: VMware release new version, duplicated guy also release the new blog about this.
 ![](/assets/spring-gateway/dup-date.png)
 ![](/assets/spring-gateway/my-date.png)
 
